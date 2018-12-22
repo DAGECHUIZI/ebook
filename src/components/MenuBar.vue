@@ -3,7 +3,7 @@
         <transition name="slide-up">
             <div class="menu-wrapper" v-show="ifTitleAndMenuShow" :class="{'hide-box-shadow':ifSettingShow || !ifTitleAndMenuShow}">
                 <div class="icon-wrapper">
-                    <span class="icon-menu icon"></span>
+                    <span class="icon-menu icon" @click="showSetting(3)"></span>
                 </div>
                 <div class="icon-wrapper">
                     <span class="icon-progress icon" @click="showSetting(2)"></span>
@@ -59,12 +59,25 @@
                 </div>
             </div>
         </transition>
-
+        <content-view :ifShowContent="ifShowContent"
+                        v-show="ifShowContent"
+                        :navigation="navigation"
+                        :bookAvailable="bookAvailable"
+                        @jumpTo="jumpTo"></content-view>
+        <transition name="fade">
+            <div class="content-mask"
+                    v-show="ifShowContent"
+                    @click="hideContent"></div>
+        </transition>
     </div>
 </template>
 
 <script>
+    import ContentView from './Content'
     export default {
+        components: {
+            ContentView
+        },
         props: {
             ifTitleAndMenuShow: {
                 type:Boolean,
@@ -74,13 +87,15 @@
             defaultFontSize: Number,
             themeList: Array,
             defaultTheme: Number,
-            bookAvailable: Boolean
+            bookAvailable: Boolean,
+            navigation: Object
         },
         data() {
             return {
                 ifSettingShow:false,
                 showTag: 0,
                 progress: 0,
+                ifShowContent: false
             }
         },
         methods: {
@@ -88,8 +103,13 @@
                 this.$emit('setFontSize',fontSize)
             },
             showSetting(tag) {
-                this.ifSettingShow = true;
-                this.showTag=tag
+                this.showTag=tag;
+                if (this.showTag === 3) {
+                    this.ifSettingShow = false
+                    this.ifShowContent = true
+                } else {
+                    this.ifSettingShow = true
+                }
             },
             hideSetting() {
                 this.ifSettingShow = false;
@@ -98,11 +118,17 @@
                 this.$emit('setTheme',index);
             },
             onProgressInput (progress) {
-                this.progress = progress
+                this.progress = progress;
                 this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
             },
             onProgressChange(progress) {
                 this.$emit('onProgressChange', progress)
+            },
+            hideContent() {
+                this.ifShowContent = false
+            },
+            jumpTo(target) {
+                this.$emit('jumpTo',target)
             }
         }
     }
@@ -273,6 +299,16 @@
                     text-align: center;
                 }
             }
+        }
+        .content-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 101;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            background: rgba(51,51,51,.8);
         }
     }
 

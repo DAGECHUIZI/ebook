@@ -18,6 +18,8 @@
                   @setTheme="setTheme"
                   :bookAvailable="bookAvailable"
                   @onProgressChange="onProgressChange"
+                  @jumpTo="jumpTo"
+                  :navigation="navigation"
                   ref="menuBar"></menu-bar>
     </div>
 </template>
@@ -26,7 +28,7 @@
     import TitleBar from './components/TitleBar';
     import MenuBar from './components/MenuBar';
     import Epub from 'epubjs';
-    const DOWNLOAD_URL='/static/2018_Book_AgileProcessesInSoftwareEngine.epub';
+    const DOWNLOAD_URL='/static/xcb.epub';
     global.ePub=Epub;
     export default {
         components: {
@@ -81,7 +83,8 @@
                         }
                     },
                 ],
-                bookAvailable: false
+                bookAvailable: false,
+                navigation: {}
             }
         },
         methods: {
@@ -105,6 +108,7 @@
                 this.themes.select(this.defaultTheme);
                 //
                 this.book.ready.then(() => {
+                    this.navigation = this.book.navigation;
                     return this.book.locations.generate()
                 }).then(result => {
                     this.locations = this.book.locations;
@@ -148,6 +152,15 @@
                 const percentage = progress /100;
                 const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
                 this.rendition.display(location)
+            },
+            jumpTo(href) {
+                this.rendition.display(href)
+                this.hideTitleAndMenu()
+            },
+            hideTitleAndMenu() {
+                this.ifTitleAndMenuShow = false;
+                this.$refs.menuBar.hideSetting();
+                this.$refs.menuBar.hideContent()
             }
         },
         mounted() {
