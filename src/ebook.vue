@@ -97,7 +97,9 @@
                 //
                 this.rendition=this.book.renderTo('read',{
                     width:window.innerWidth,
-                    height:window.innerHeight
+                    height:window.innerHeight,
+                    // 兼容iOS
+                    method: 'default'
                 });
                 //
                 this.rendition.display();

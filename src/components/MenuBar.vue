@@ -144,19 +144,19 @@
     }
 </script>
 
-<style scoped lang="scss">
-    @import "../assets/styles/global";
+<style lang='scss' scoped>
+    @import '../assets/styles/global';
     .menu-bar {
         .menu-wrapper {
             position: absolute;
-            button: 0;
+            bottom: 0;
             left: 0;
             z-index: 102;
-            width: 100%;
             display: flex;
+            width: 100%;
             height: px2rem(48);
-            background-color: white;
-            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
+            background: white;
+            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, .15);
             &.hide-box-shadow {
                 box-shadow: none;
             }
@@ -173,13 +173,13 @@
         }
         .setting-wrapper {
             position: absolute;
-            z-index: 101;
-            bottom: px2rem(0);
+            bottom: px2rem(48);
             left: 0;
+            z-index: 101;
             width: 100%;
             height: px2rem(60);
-            background-color: white;
-            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
+            background: white;
+            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, .15);
             .setting-font-size {
                 display: flex;
                 height: 100%;
@@ -222,18 +222,18 @@
                             .point {
                                 position: absolute;
                                 top: px2rem(-8);
-                                left: px2rem(-8);
+                                left: px2rem(-10);
                                 width: px2rem(20);
                                 height: px2rem(20);
                                 border-radius: 50%;
-                                background-color: white;
+                                background: white;
                                 border: px2rem(1) solid #ccc;
-                                box-shadow: 0 px2rem(4) px2rem(4) rgba(0,0,0,.15);
+                                box-shadow: 0 px2rem(4) px2rem(4) rgba(0, 0, 0, .15);
                                 @include center;
                                 .small-point {
                                     width: px2rem(5);
                                     height: px2rem(5);
-                                    background-color: black;
+                                    background: black;
                                     border-radius: 50%;
                                 }
                             }
@@ -270,9 +270,9 @@
                 }
             }
             .setting-progress {
+                position: relative;
                 width: 100%;
                 height: 100%;
-                position: relative;
                 .progress-wrapper {
                     width: 100%;
                     height: 100%;
@@ -283,7 +283,7 @@
                         width: 100%;
                         -webkit-appearance: none;
                         height: px2rem(2);
-                        background: -webkit-linear-gradient(#999,#999) no-repeat, #ddd;
+                        background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
                         background-size: 0 100%;
                         &:focus {
                             outline: none;
@@ -294,7 +294,7 @@
                             width: px2rem(20);
                             border-radius: 50%;
                             background: white;
-                            box-shadow: 0 4px 4px 0 rgba(0,0,0,.15);
+                            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .15);
                             border: px2rem(1) solid #ddd;
                         }
                     }
@@ -318,8 +318,7 @@
             display: flex;
             width: 100%;
             height: 100%;
-            background: rgba(51,51,51,.8);
+            background: rgba(51, 51, 51, .8);
         }
     }
-
 </style>
