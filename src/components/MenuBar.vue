@@ -88,7 +88,8 @@
             themeList: Array,
             defaultTheme: Number,
             bookAvailable: Boolean,
-            navigation: Object
+            navigation: Object,
+            parentProgress: Number
         },
         data() {
             return {
@@ -96,6 +97,15 @@
                 showTag: 0,
                 progress: 0,
                 ifShowContent: false
+            }
+        },
+        watch: {
+            parentProgress: {
+                handler: function (val, oldVal) {
+                    this.progress = val;
+                    this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
+                },
+                deep: true
             }
         },
         methods: {

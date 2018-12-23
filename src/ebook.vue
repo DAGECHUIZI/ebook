@@ -20,6 +20,7 @@
                   @onProgressChange="onProgressChange"
                   @jumpTo="jumpTo"
                   :navigation="navigation"
+                  :parentProgress="progress"
                   ref="menuBar"></menu-bar>
     </div>
 </template>
@@ -28,7 +29,7 @@
     import TitleBar from './components/TitleBar';
     import MenuBar from './components/MenuBar';
     import Epub from 'epubjs';
-    const DOWNLOAD_URL='/static/xcb.epub';
+    const DOWNLOAD_URL='/static/2018_Book_AgileProcessesInSoftwareEngine.epub';
     global.ePub=Epub;
     export default {
         components: {
@@ -84,7 +85,8 @@
                     },
                 ],
                 bookAvailable: false,
-                navigation: {}
+                navigation: {},
+                progress: 0
             }
         },
         methods: {
@@ -113,17 +115,25 @@
                 }).then(result => {
                     this.locations = this.book.locations;
                     this.bookAvailable = true;
-                })
+                });
             },
             // 翻页
             prevPage() {
                 if (this.rendition) {
-                    this.rendition.prev()
+                    this.rendition.prev().then(() => {
+                        const currentLocation = this.rendition.currentLocation();
+                        this.progress = this.locations.percentageFromCfi(currentLocation.start.cfi);
+                        this.progress = Math.round(this.progress * 100)
+                    })
                 }
             },
             nextPage() {
                 if (this.rendition) {
-                    this.rendition.next()
+                    this.rendition.next().then(() => {
+                        const currentLocation = this.rendition.currentLocation();
+                        this.progress = this.locations.percentageFromCfi(currentLocation.start.cfi);
+                        this.progress = Math.round(this.progress * 100)
+                    })
                 }
             },
             // 菜单显示隐藏
