@@ -2,7 +2,7 @@
     <div class="ebook">
         <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"
                    :class="{'default': defaultTheme === 0,
-                           'eye': defaultTheme === 1,
+                            'eye': defaultTheme === 1,
                            'night': defaultTheme === 2,
                            'gold': defaultTheme === 3}"></title-bar>
                         <!--绑定class使组件背景颜色随主题变化-->
@@ -191,6 +191,9 @@
     @import "../src/assets/styles/global";
     .ebook {
         position: relative;
+        .default {
+            background-color: #fff;
+        }
         .eye {
             background-color: #ceeaba;
         }

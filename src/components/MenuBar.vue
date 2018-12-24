@@ -1,7 +1,11 @@
 <template>
     <div class="menu-bar">
         <transition name="slide-up">
-            <div class="menu-wrapper" v-show="ifTitleAndMenuShow" :class="{'hide-box-shadow':ifSettingShow || !ifTitleAndMenuShow}">
+            <div class="menu-wrapper" v-show="ifTitleAndMenuShow" :class="{'hide-box-shadow':ifSettingShow || !ifTitleAndMenuShow,
+                                                                            'default': defaultTheme === 0,
+                                                                            'eye': defaultTheme === 1,
+                                                                           'night': defaultTheme === 2,
+                                                                           'gold': defaultTheme === 3}">
                 <div class="icon-wrapper">
                     <span class="icon-menu icon" @click="showSetting(3)"></span>
                 </div>
@@ -18,7 +22,10 @@
         </transition>
         <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
-                <div class="setting-font-size" v-if="showTag===0">
+                <div class="setting-font-size" v-if="showTag===0" :class="{'default': defaultTheme === 0,
+                                                                        'eye': defaultTheme === 1,
+                                                                       'night': defaultTheme === 2,
+                                                                       'gold': defaultTheme === 3}">
                     <div class="preview" :style="{fontSize:fontSizeList[0].fontSize+'px'}">A</div>
                     <div class="select">
                         <div class="select-wrapper" v-for="(item,index) in fontSizeList" :key="index"
@@ -34,14 +41,21 @@
                     </div>
                     <div class="preview" :style="{fontSize:fontSizeList[fontSizeList.length-1].fontSize+'px'}">A</div>
                 </div>
-                <div class="setting-theme" v-else-if="showTag===1">
+                <div class="setting-theme" v-else-if="showTag===1" :class="{'default': defaultTheme === 0,
+                                                                        'eye': defaultTheme === 1,
+                                                                       'night': defaultTheme === 2,
+                                                                       'gold': defaultTheme === 3}">
                     <div class="setting-theme-item" v-for="(item,index) in themeList" :key="index" @click="setTheme(index)">
                         <div class="preview" :style="{background:item.style.body.background}"
-                        :class="{'no-border' : item.style.body.background !== '#fff'}"></div>
+                        :class="{'no-border' : defaultTheme !== index}"></div>
+                               <!--上方代码实现：主题选项与主题同色时，加上边框-->
                         <div class="text" :class="{'selected' : index === defaultTheme}">{{item.name}}</div>
                     </div>
                 </div>
-                <div class="setting-progress" v-else-if="showTag===2">
+                <div class="setting-progress" v-else-if="showTag===2" :class="{'default': defaultTheme === 0,
+                                                                        'eye': defaultTheme === 1,
+                                                                       'night': defaultTheme === 2,
+                                                                       'gold': defaultTheme === 3}">
                     <div class="progress-wrapper">
                         <input class="progress" type="range"
                                max="100"
@@ -63,6 +77,7 @@
                         v-show="ifShowContent"
                         :navigation="navigation"
                         :bookAvailable="bookAvailable"
+                        :defaultTheme="defaultTheme"
                         @jumpTo="jumpTo"></content-view>
         <transition name="fade">
             <div class="content-mask"
@@ -115,7 +130,7 @@
             showSetting(tag) {
                 this.showTag=tag;
                 if (this.showTag === 3) {
-                    this.ifSettingShow = false
+                    this.ifSettingShow = false;
                     this.ifShowContent = true
                 } else {
                     this.ifSettingShow = true
@@ -146,6 +161,18 @@
 
 <style lang='scss' scoped>
     @import '../assets/styles/global';
+    .default {
+        background-color: #fff;
+    }
+    .eye {
+        background-color: #ceeaba;
+    }
+    .night {
+        background-color: #404040;
+    }
+    .gold {
+        background-color: rgb(241,236,226);
+    }
     .menu-bar {
         .menu-wrapper {
             position: absolute;
@@ -155,7 +182,6 @@
             display: flex;
             width: 100%;
             height: px2rem(48);
-            background: white;
             box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, .15);
             &.hide-box-shadow {
                 box-shadow: none;
