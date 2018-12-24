@@ -1,6 +1,11 @@
 <template>
     <div class="ebook">
-        <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar>
+        <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"
+                   :class="{'default': defaultTheme === 0,
+                           'eye': defaultTheme === 1,
+                           'night': defaultTheme === 2,
+                           'gold': defaultTheme === 3}"></title-bar>
+                        <!--绑定class使组件背景颜色随主题变化-->
         <div class="read-wrapper">
             <div id="read"></div>
             <div class="mask">
@@ -86,7 +91,7 @@
                 ],
                 bookAvailable: false,
                 navigation: {},
-                progress: 0
+                progress: 0,
             }
         },
         methods: {
@@ -158,7 +163,8 @@
             },
             setTheme(index) {
                 this.themes.select(this.themeList[index].name);
-                this.defaultTheme=index
+                this.defaultTheme=index;
+
             },
             onProgressChange(progress) {
                 const percentage = progress /100;
@@ -185,6 +191,15 @@
     @import "../src/assets/styles/global";
     .ebook {
         position: relative;
+        .eye {
+            background-color: #ceeaba;
+        }
+        .night {
+            background-color: #404040;
+        }
+        .gold {
+            background-color: rgb(241,236,226);
+        }
         .read-wrapper {
             .mask {
                 position: absolute;
