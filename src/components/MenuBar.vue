@@ -178,7 +178,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            z-index: 102;
+            z-index: 101;
             display: flex;
             width: 100%;
             height: px2rem(48);
@@ -241,7 +241,7 @@
                         }
                         .point-wrapper {
                             position: relative;
-                            flex: 0 0 0;
+                            flex: 0 0;
                             width: 0;
                             height: px2rem(7);
                             border-left: px2rem(1) solid #ccc;
@@ -340,7 +340,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 101;
+            z-index: 102;
             display: flex;
             width: 100%;
             height: 100%;
