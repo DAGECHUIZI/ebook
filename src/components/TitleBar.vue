@@ -1,7 +1,7 @@
 <template>
     <transition name="slide-down">
         <div class="title-wrapper" v-show="ifTitleAndMenuShow">
-            <div class="left">
+            <div class="left" @click="backToHomePage()">
                 <span class="icon-back icon"></span>
             </div>
             <div class="right">
@@ -25,6 +25,14 @@
             ifTitleAndMenuShow: {
                 type:Boolean,
                 default:false
+            }
+        },
+        methods: {
+            backToHomePage() {
+                this.$router.push({
+                    path: '/homepage',
+                    name: 'homepage',
+                })
             }
         }
     }
