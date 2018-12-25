@@ -34,7 +34,6 @@
     import TitleBar from './components/TitleBar';
     import MenuBar from './components/MenuBar';
     import Epub from 'epubjs';
-    const DOWNLOAD_URL='/static/2018_Book_AgileProcessesInSoftwareEngine.epub';
     global.ePub=Epub;
     export default {
         components: {
@@ -92,13 +91,15 @@
                 bookAvailable: false,
                 navigation: {},
                 progress: 0,
+                DOWNLOAD_URL:''
             }
         },
         methods: {
             // 电子书的渲染和解析
             showEpub() {
                 //生成电子书
-                this.book= new Epub(DOWNLOAD_URL);
+                this.DOWNLOAD_URL= this.$route.params.download_url;  /*接受homepage传递过来的url*/
+                this.book= new Epub(this.DOWNLOAD_URL);
                 //
                 this.rendition=this.book.renderTo('read',{
                     width:window.innerWidth,
@@ -179,11 +180,11 @@
                 this.ifTitleAndMenuShow = false;
                 this.$refs.menuBar.hideSetting();
                 this.$refs.menuBar.hideContent()
-            }
+            },
         },
         mounted() {
             this.showEpub()
-        }
+        },
     }
 </script>
 
